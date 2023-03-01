@@ -15,6 +15,7 @@ source = ['source ?', 'sources ?']
 bonjour = ['bonjour bot', 'bonjour le bot', 'salut bot', 'salut le bot', 'yo bot', 'yo le bot', 'coucou bot', 'coucou le bot']
 good_bot = ['good bot', 'bon bot', 'gentil bot']
 bad_bot = ['bad bot', 'méchant bot', 'mauvais bot']
+hot_bot = ['gay bot']
 
 
 async def handle_response(user_message, bot, message) -> str:
@@ -75,6 +76,11 @@ async def handle_response(user_message, bot, message) -> str:
     if p_message.count(word) > 0:
       bad_bot_reaction = [':nerd:', ':pensive:', ':worried:', ':slight_frown:', ':frowning2:', ':cry:']
       return random.choice(bad_bot_reaction)
+
+  for word in hot_bot:
+    if p_message.count(word) > 0:
+      hot_bot_reaction = [':hot_face:', ':shushing_face:']
+      return random.choice(hot_bot_reaction)
   
 
   if any(word in p_message for word in conversano):
