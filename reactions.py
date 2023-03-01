@@ -1,4 +1,5 @@
 import discord
+import random
 import sys
 sys.path.insert(0, 'cogs')
 import general
@@ -12,6 +13,8 @@ cum = ['cum']
 conversano = ['arabe', 'arabes']
 source = ['source ?', 'sources ?']
 bonjour = ['bonjour bot', 'bonjour le bot', 'salut bot', 'salut le bot', 'yo bot', 'yo le bot', 'coucou bot', 'coucou le bot']
+good_bot = ['good bot', 'bon bot', 'gentil bot']
+bad_bot = ['bad bot', 'méchant bot', 'mauvais bot']
 
 
 async def handle_response(user_message, bot, message) -> str:
@@ -61,7 +64,17 @@ async def handle_response(user_message, bot, message) -> str:
   for word in bonjour:
     if p_message.count(word) > 0:
       await general.bonjour(context)
+      return ''
 
+  for word in good_bot:
+    if p_message.count(word) > 0:
+      good_bot_reactions = [':smiley:', ':smile:', ':grin:',':blush:', ':smiling_face_with_3_hearts:']
+      return random.choice(good_bot_reactions)
+
+  for word in bad_bot:
+    if p_message.count(word) > 0:
+      bad_bot_reaction = [':nerd:', ':pensive:', ':worried:', ':slight_frown:', ':frowning2:', ':cry:']
+      return random.choice(bad_bot_reaction)
   
 
   if any(word in p_message for word in conversano):

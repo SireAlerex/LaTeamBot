@@ -120,6 +120,15 @@ class General(commands.Cog, name="general"):
   async def roll(self, ctx: Context, arg) -> None:
     await roll(ctx, arg)
 
+  @commands.hybrid_command(name='basé', description='Détermine si c\'est basé ou cringe')
+  async def basé(self, context: Context):
+    rolled = secrets.randbelow(2)
+    if rolled == 0:
+      result = 'Basé'
+    else:
+      result = 'Cringe'
+    await context.send(result)
+
   @commands.hybrid_command(name='anniv', description='Mettre son anniversaire dans la base de données')
   async def anniv(self, context: Context, arg):
     try:
