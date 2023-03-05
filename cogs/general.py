@@ -120,7 +120,8 @@ class General(commands.Cog, name="general"):
   async def roll(self, ctx: Context, arg) -> None:
     await roll(ctx, arg)
 
-  @commands.hybrid_command(name='basé', description='Détermine si c\'est basé ou cringe')
+  @commands.hybrid_command(name='basé',
+                           description='Détermine si c\'est basé ou cringe')
   async def basé(self, context: Context):
     rolled = secrets.randbelow(2)
     if rolled == 0:
@@ -129,7 +130,9 @@ class General(commands.Cog, name="general"):
       result = 'Cringe'
     await context.send(result)
 
-  @commands.hybrid_command(name='anniv', description='Mettre son anniversaire dans la base de données')
+  @commands.hybrid_command(
+    name='anniv',
+    description='Mettre son anniversaire dans la base de données')
   async def anniv(self, context: Context, arg):
     try:
       date = arg
@@ -144,12 +147,13 @@ class General(commands.Cog, name="general"):
       error = 'Format incorrect, utiliser : $anniv <jour>-<mois>'
       await context.send(error)
 
-  @commands.hybrid_command(name='showanniv', description='Montre son anniversaire')
+  @commands.hybrid_command(name='showanniv',
+                           description='Montre son anniversaire')
   async def showanniv(self, context: Context):
     try:
       key = 'anniv_' + str(context.author.id)
       value = db[key]
-      await context.send('Votre anniversaire : '+ str(value))
+      await context.send('Votre anniversaire : ' + str(value))
     except Exception as e:
       error = 'Pas d\'anniversaire dans la base de données, utilisez $anniv <votre-anniv>'
       await context.send(error)

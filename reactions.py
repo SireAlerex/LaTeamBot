@@ -1,6 +1,7 @@
 import discord
 import random
 import sys
+
 sys.path.insert(0, 'cogs')
 import general
 import utils
@@ -12,26 +13,31 @@ sus = ['sus', 'sussy']
 cum = ['cum']
 conversano = ['arabe', 'arabes']
 source = ['source ?', 'sources ?']
-bonjour = ['bonjour bot', 'bonjour le bot', 'salut bot', 'salut le bot', 'yo bot', 'yo le bot', 'coucou bot', 'coucou le bot']
+bonjour = [
+  'bonjour bot', 'bonjour le bot', 'salut bot', 'salut le bot', 'yo bot',
+  'yo le bot', 'coucou bot', 'coucou le bot'
+]
 good_bot = ['good bot', 'bon bot', 'gentil bot']
 bad_bot = ['bad bot', 'méchant bot', 'mauvais bot']
 hot_bot = ['gay bot']
+thomas = ['thomas', 'attends', 'attend', 'attendre', 'civ', 'civ6']
 
 
 async def handle_response(user_message, bot, message) -> str:
   p_message = user_message.lower()
   context = await bot.get_context(message)
-  
+
   raw_anniv = utils.get_anniv(message.author.id)
   if raw_anniv != 'not found':
     day = int(raw_anniv.split('-')[0])
     month = int(raw_anniv.split('-')[1])
     anniv = datetime.datetime(1, month, day)
-    today =datetime.date.today()
+    today = datetime.date.today()
     if anniv.month == today.month and anniv.day == today.day:
       check_key = 'check_anniv_' + str(message.author.id)
       if db[check_key] == 0:
-        await context.send('Joyeux anniversaire ' + format(message.author.mention))
+        await context.send('Joyeux anniversaire ' +
+                           format(message.author.mention))
         db[check_key] = 1
 
   if any(word in p_message for word in societe):  #réaction saucisse
@@ -41,7 +47,7 @@ async def handle_response(user_message, bot, message) -> str:
   if any(word in p_message for word in sus):  #réaction sus
     emoji = discord.utils.get(bot.emojis, name='afungus')
     return 'sus ' + str(emoji)
-  
+
   if p_message == 'fromage':  #réaction fromage
     emoji = discord.utils.get(bot.emojis, name='fromage')
     return str(emoji)
@@ -69,19 +75,32 @@ async def handle_response(user_message, bot, message) -> str:
 
   for word in good_bot:
     if p_message.count(word) > 0:
-      good_bot_reactions = [':smiley:', ':smile:', ':grin:',':blush:', ':smiling_face_with_3_hearts:']
+      good_bot_reactions = [
+        ':smiley:', ':smile:', ':grin:', ':blush:',
+        ':smiling_face_with_3_hearts:'
+      ]
       return random.choice(good_bot_reactions)
 
   for word in bad_bot:
     if p_message.count(word) > 0:
-      bad_bot_reaction = [':nerd:', ':pensive:', ':worried:', ':slight_frown:', ':frowning2:', ':cry:']
+      bad_bot_reaction = [
+        ':nerd:', ':pensive:', ':worried:', ':slight_frown:', ':frowning2:',
+        ':cry:'
+      ]
       return random.choice(bad_bot_reaction)
 
   for word in hot_bot:
     if p_message.count(word) > 0:
       hot_bot_reaction = [':hot_face:', ':shushing_face:']
       return random.choice(hot_bot_reaction)
-  
+
+  count_thomas = 0
+  for word in thomas:
+    count_thomas += p_message.count(word)
+  if count_thomas >= 3:
+    print('thomas')
+    emoji = discord.utils.get(bot.emojis, name='Bedge')
+    return ' ' + str(emoji)
 
   if any(word in p_message for word in conversano):
     link = 'https://media.tenor.com/UUXIxp7UiI4AAAAC/bagarre-soral.gif'

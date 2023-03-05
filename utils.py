@@ -16,7 +16,14 @@ def get_channels(ctx: Context):
 def get_user_from_name(name, ctx):
   users = get_users(ctx)
   for user in users:
-    if user.nick == name:  
+    if user.nick == name:
+      return user
+
+
+def get_user_from_id(id, context):
+  users = get_users(context)
+  for user in users:
+    if user.id == id:
       return user
 
 
@@ -75,20 +82,44 @@ def get_number_emoji(number, ctx):
   else:
     return 'Erreur : number emoji'
 
+
 def get_user_macro_count(context, id):
   key = 'macro_' + str(id)
   user_macros = db.prefix(key)
   return len(user_macros)
 
+
 def get_macro_lim(context):
-  return db['macro_lim']
+  return int(db['macro_lim'])
+
 
 def get_macro(context, id, name):
   key = 'macro_' + str(id)
-  length = len(key)+1
+  length = len(key) + 1
   user_macros = db.prefix(key)
   for user_macro in user_macros:
     test = user_macro[length:]
     if test == name:
       return db[user_macro]
   return 'not found'
+
+
+def remove_all(string, to_remove):
+  return string.replace(to_remove, '')
+
+
+def reset_farkle():
+  db['farkle'] = 0
+  db['farkle_player1'] = -1
+  db['farkle_player2'] = -1
+  db['farkle_turn'] = -1
+  db['farkle_player1_roll'] = ''
+  db['farkle_player2_roll'] = ''
+  db['farkle_player1_score'] = 0
+  db['farkle_score_temp'] = 0
+  db['farkle_player2_score'] = 0
+  db['farkle_maxscore'] = 4000
+  db['farkle_reset_player1'] = 0
+  db['farkle_reset_player2'] = 0
+  db['farkle_player1_dices'] = 6
+  db['farkle_player2_dices'] = 6

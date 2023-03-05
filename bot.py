@@ -11,6 +11,7 @@ import time
 import datetime
 import utils
 import sys
+
 sys.path.insert(0, 'cogs')
 import ranking
 
@@ -38,6 +39,7 @@ def run_bot():
   @bot.event
   async def on_ready() -> None:
     status_task.start()
+    reset_anniv_task.start()
     print('bot ready')
     print(f'Logged in as {bot.user} (ID: {bot.user.id})')
     print('------')
@@ -47,6 +49,8 @@ def run_bot():
     if not admin_check(ctx, owner):
       return
     await ctx.send(arg)
+    string = utils.remove_all(arg, '?')
+    await ctx.send(str(arg) + ' ' + str(string))
 
   @bot.command()
   async def status(ctx, arg):
@@ -83,13 +87,14 @@ def run_bot():
     check_keys = db.prefix('check_anniv_')
     for check_key in check_keys:
       db[check_key] = 0
-    print('reseted anniv message')
+    print('reseted anniv message')     
 
   @bot.command()
   async def reset_anniv(ctx):
     if not admin_check(ctx, owner):
       return
     await reset_anniv_def()
+    await ctx.send('Check anniversaire message reset')
 
   @bot.command()
   async def set_macro_lim(ctx, arg):
@@ -97,6 +102,7 @@ def run_bot():
       return
     key = 'macro_lim'
     db[key] = arg
+    await ctx.send('set macro_lim to '+arg)
 
   @bot.event
   async def on_message(message: discord.Message) -> None:
@@ -137,7 +143,7 @@ def run_bot():
     chan = []
     for channel in guild.channels:
       if channel.category != None:
-        print(str(channel.permissions_for(bot)))
+        #print(str(channel.permissions_for(utils.get_bot_as_member(ctx))))
         chan.append(str(channel))
     await ctx.send(chan)
 
@@ -145,8 +151,8 @@ def run_bot():
   async def set_rank_v(ctx):
     if not admin_check(ctx, owner):
       return
-      
-    start = time.time()    
+
+    start = time.time()
     ranking.set_rank(ctx)
     channels = utils.get_channels(ctx)
     good_perm = 1638597655616
@@ -154,7 +160,7 @@ def run_bot():
     v = os.environ['v']
     v_list = v.split()
     search_start = datetime.datetime(2023, 2, 28, 19, 49)
-    
+
     for chan in channels:
       perm = chan.permissions_for(bot_member)
       perm_value = perm.value
@@ -167,12 +173,63 @@ def run_bot():
                 db[key] += 1
 
     end = time.time() - start
-    print('temps d\'exécution rank v : '+str(end))
+    print('temps d\'exécution rank v : ' + str(end))
+    await ctx.send('set rank v, temps = ' + str(end))
+
+  @bot.command()
+  async def farkle_show(context):
+    if not admin_check(context, owner):
+      return
+    farkle_keys = db.prefix('farkle')
+    embed = discord.Embed(description='farkle db :')
+    for farkle_key in farkle_keys:
+      print(farkle_key + ' ' + str(db[farkle_key]))
+      embed.add_field(name=farkle_key, value=str(db[farkle_key]), inline=True)
+    await context.send(embed=embed)
+
+  @bot.command()
+  async def farkle_setup(context):
+    if not admin_check(context, owner):
+      return
+    utils.reset_farkle()
+    await context.send('reset farkle')
+
+  @tasks.loop(minutes=15.0)
+  async def farkle_auto_reset():
+    utils.reset_farkle()
+
+  @bot.command()
+  async def set_db(context, key, value, type='str'):
+    if not admin_check(context, owner):
+      return
+    if value == '¤':
+      db[key] = ''
+      return
+    if type == 'int':
+      db[key] = int(value)
+    else:
+      db[key] = value
+    await context.send('set value with no error')
+
+  @bot.command()
+  async def is_int(context, key):
+    if not admin_check(context, owner):
+      return
+    if isinstance(db[key], int):
+      await context.send('yes')
+    else:
+      await context.send('no')
+
+  @bot.command()
+  async def get_db(context, key):
+    if not admin_check(context, owner):
+      return
+    await context.send(db[key])
 
   async def load_cogs() -> None:
     for file in os.listdir('cogs'):
       if file.endswith('.py'):
-        print('charging '+file)
+        print('charging ' + file)
         extension = file[:-3]
         try:
           await bot.load_extension(f"cogs.{extension}")
