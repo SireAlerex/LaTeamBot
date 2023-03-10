@@ -6,6 +6,7 @@ import os
 import random
 import asyncio
 import reactions
+import emoji
 import macros
 import time
 import datetime
@@ -118,10 +119,17 @@ def run_bot():
       user_message = user_message[1:]
       await macros.handle_macros(user_message, bot, message)
       return
-    response = await reactions.handle_response(user_message, bot, message)
+    response = reactions.handle_response(user_message, bot, message)
+    if isinstance(response, list):
+      swords = '\U00002694️'
+      pirate = '\U0001F3F4'+'\U0000200D'+'\U00002620'+'\U0000FE0F'
+      res_list = [swords, pirate]
+      for word in response:
+        await message.add_reaction(word)
+      return
     if response == '':
       return
-    if str(response)[0] == '<':
+    if response[0] == '<': #embed
       await message.channel.send(embed=response)
     else:
       await message.channel.send(response)
@@ -209,7 +217,7 @@ def run_bot():
       db[key] = int(value)
     else:
       db[key] = value
-    await context.send('set value with no error')
+    await context.send('successfully set db')
 
   @bot.command()
   async def is_int(context, key):

@@ -55,6 +55,7 @@ async def check_win(context, bot):
     player = utils.get_user_from_id(int(db['farkle_player1']), context)
     await context.send('Bravo ' + player.name + ', tu as gagné !')
     utils.reset_farkle()
+    bot.game_timer.cancel()
     return
   if db['farkle_player2_score'] >= db['farkle_maxscore']:
     player = utils.get_user_from_id(int(db['farkle_player2']), context)
@@ -381,6 +382,10 @@ class Farkle(commands.Cog, name='farkle'):
       commandes += 'test <a-b-..-f> : donne le score que valent les dés en paramètres'
       embed.add_field(name='Options de la commande $farkle', value=commandes, inline=False)
       await context.send(embed=embed)
+      return
+
+    if arg == 'showscore':
+      await show_score(context)
       return
 
     if arg == 'max' or arg == 'm':

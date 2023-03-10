@@ -13,6 +13,7 @@ urllib3 = "^1.26.12"
 discord = "^2.1.0"
 django-politico-2020elex-candidate-rankings = "^0.0.4"
 helpers = "^0.2.0"
+emoji = "^2.2.0"
 
 [tool.poetry.dev-dependencies]
 debugpy = "^1.6.2"
