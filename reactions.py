@@ -1,5 +1,6 @@
 import discord
 import random
+import secrets
 
 import utils
 import datetime
@@ -9,11 +10,12 @@ societe = ['sociét', 'societ']
 saucisse = ['saucisse']
 sus = ['sus']
 cum = ['cum']
+ou = ['ou']
 fromage = ['fromage']
 cfr = ['pas mal non']
 conversano = ['arab']
 source = ['source ?', 'sources ?']
-bot_list = ['bot', 'robot']
+bot_list = ['bot', 'robot', 'le bot']
 salutations = ['bonjour', 'salut', 'coucou', 'yo']
 good_bot = ['good', 'bon', 'gentil']
 bad_bot = ['bad', 'méchant', 'mauvais']
@@ -29,6 +31,12 @@ def nerdify(string):
     else:
       res += string[i]
   return res
+
+def sentence_from_list(list):
+  sentence = ""
+  for word in list:
+    sentence += str(word) + ' '
+  return sentence
 
 def find_any_word(word_list, source_list):
   for word in source_list:
@@ -129,5 +137,32 @@ def handle_response(user_message, bot, message) -> str:
     embed = discord.Embed(description='Conversano')
     embed.set_image(url=link)
     return embed
+
+  if p_list.count("ou") == 1:
+    work_list = p_list.copy()
+    index = work_list.index("ou")
+    first_choice = work_list[:index]
+    second_choice = work_list[index+1:]
+    if first_choice.count("bot") == 1:
+      bot_index = first_choice.index("bot")
+      first_choice = first_choice[bot_index+1:]
+    elif second_choice.count("bot") == 1:
+      bot_index = second_choice.index("bot")
+      if second_choice[bot_index-1] == "le":
+        second_choice = second_choice[:bot_index-1]
+      else:
+        second_choice = second_choice[:bot_index]
+    else:
+      return
+    print("choices :")
+    print(first_choice)
+    print(second_choice)
+    piece = secrets.randbelow(2)
+    if piece == 1:
+      return sentence_from_list(first_choice)
+    elif piece == 0:
+      return sentence_from_list(second_choice)
+    else:
+      return "what the fuck happened"
 
   return ''

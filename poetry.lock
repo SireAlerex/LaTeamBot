@@ -104,6 +104,38 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "boto3"
+version = "1.26.89"
+description = "The AWS SDK for Python"
+category = "main"
+optional = false
+python-versions = ">= 3.7"
+
+[package.dependencies]
+botocore = ">=1.29.89,<1.30.0"
+jmespath = ">=0.7.1,<2.0.0"
+s3transfer = ">=0.6.0,<0.7.0"
+
+[package.extras]
+crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
+
+[[package]]
+name = "botocore"
+version = "1.29.89"
+description = "Low-level, data-driven core of boto 3."
+category = "main"
+optional = false
+python-versions = ">= 3.7"
+
+[package.dependencies]
+jmespath = ">=0.7.1,<2.0.0"
+python-dateutil = ">=2.1,<3.0.0"
+urllib3 = ">=1.25.4,<1.27"
+
+[package.extras]
+crt = ["awscrt (==0.16.9)"]
+
+[[package]]
 name = "celery"
 version = "5.2.7"
 description = "Distributed Task Queue."
@@ -337,6 +369,17 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 dev = ["pytest", "coverage", "coveralls"]
 
 [[package]]
+name = "exceptiongroup"
+version = "1.1.0"
+description = "Backport of PEP 654 (exception groups)"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+test = ["pytest (>=6)"]
+
+[[package]]
 name = "flask"
 version = "2.2.2"
 description = "A simple framework for building complex web applications."
@@ -363,6 +406,14 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "futures"
+version = "3.1.1"
+description = "Backport of the concurrent.futures package from Python 3.2"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "helpers"
 version = "0.2.0"
 description = "Improved developer experience, accumulated."
@@ -377,6 +428,14 @@ description = "Internationalized Domain Names in Applications (IDNA)"
 category = "main"
 optional = false
 python-versions = ">=3.5"
+
+[[package]]
+name = "iniconfig"
+version = "2.0.0"
+description = "brain-dead simple config-ini parsing"
+category = "main"
+optional = false
+python-versions = ">=3.7"
 
 [[package]]
 name = "iso8601"
@@ -423,6 +482,14 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
+
+[[package]]
+name = "jmespath"
+version = "1.0.1"
+description = "JSON Matching Expressions"
+category = "main"
+optional = false
+python-versions = ">=3.7"
 
 [[package]]
 name = "kombu"
@@ -480,7 +547,7 @@ python-versions = ">=3.8"
 name = "packaging"
 version = "23.0"
 description = "Core utilities for Python packages"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -529,7 +596,7 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.2.2)", "pytest-cov (>=4)", "pytes
 name = "pluggy"
 version = "1.0.0"
 description = "plugin and hook calling mechanisms for python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -565,6 +632,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
+name = "pycryptodome"
+version = "3.17"
+description = "Cryptographic library for Python"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[[package]]
 name = "pycryptodomex"
 version = "3.16.0"
 description = "Cryptographic library for Python"
@@ -596,6 +671,37 @@ pycryptodomex = ">=3.12.0,<4.0.0"
 
 [package.extras]
 docs = ["Sphinx[docs] (>=4.3.2,<6.0.0)", "sphinx-autodoc-typehints[docs] (==1.12.0)", "sphinx-rtd-theme[docs] (>=1.0.0,<2.0.0)"]
+
+[[package]]
+name = "pytest"
+version = "7.2.2"
+description = "pytest: simple powerful testing with Python"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+attrs = ">=19.2.0"
+colorama = {version = "*", markers = "sys_platform == \"win32\""}
+exceptiongroup = {version = ">=1.0.0rc8", markers = "python_version < \"3.11\""}
+iniconfig = "*"
+packaging = "*"
+pluggy = ">=0.12,<2.0"
+tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
+
+[package.extras]
+testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
+
+[[package]]
+name = "python-dateutil"
+version = "2.8.2"
+description = "Extensions to the standard Python datetime module"
+category = "main"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+
+[package.dependencies]
+six = ">=1.5"
 
 [[package]]
 name = "python-lsp-jsonrpc"
@@ -736,6 +842,36 @@ dev = ["pytest (>=7.0.1)", "pytest-timeout (>=2.1.0)", "build (>=0.7.0)", "pre-c
 doc = ["pytoolconfig", "sphinx (>=4.5.0)", "sphinx-autodoc-typehints (>=1.18.1)", "sphinx-rtd-theme (>=1.0.0)"]
 
 [[package]]
+name = "s3transfer"
+version = "0.6.0"
+description = "An Amazon S3 Transfer Manager"
+category = "main"
+optional = false
+python-versions = ">= 3.7"
+
+[package.dependencies]
+botocore = ">=1.12.36,<2.0a.0"
+
+[package.extras]
+crt = ["botocore[crt] (>=1.20.29,<2.0a.0)"]
+
+[[package]]
+name = "secret"
+version = "0.8"
+description = "Secret is for storing secrets. Backed by Amazon Web Services: IAM for access policies, KMS for encryption keys and S3 for storage"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+boto3 = ">=1.2.3"
+pycryptodome = ">=3.1"
+pytest = ">=2.8.5"
+six = "*"
+tabulate = ">=0.7.5"
+trollius = ">=1.0.4"
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -750,6 +886,17 @@ description = "String case converter."
 category = "main"
 optional = false
 python-versions = "*"
+
+[[package]]
+name = "tabulate"
+version = "0.9.0"
+description = "Pretty-print tabular data"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+widechars = ["wcwidth"]
 
 [[package]]
 name = "text-unidecode"
@@ -771,9 +918,21 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "trollius"
+version = "2.2"
+description = "Port of the Tulip project (asyncio module, PEP 3156) on Python 2"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+futures = "*"
+six = "*"
 
 [[package]]
 name = "typing-extensions"
@@ -865,7 +1024,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10.0,<3.11"
-content-hash = "994d85991a5a936ba34d8b5402445f8621d919a6af727c8c3c8954a9d939e4cd"
+content-hash = "fceac2f1fb36458475170d6a1860cf584f5378626efa3d8b017532f154ef546f"
 
 [metadata.files]
 aiohttp = []
@@ -876,6 +1035,8 @@ argon2-cffi-bindings = []
 async-timeout = []
 attrs = []
 billiard = []
+boto3 = []
+botocore = []
 celery = []
 certifi = []
 cffi = []
@@ -892,14 +1053,18 @@ discord = []
 django-crosswalk-client = []
 django-politico-2020elex-candidate-rankings = []
 emoji = []
+exceptiongroup = []
 flask = []
 frozenlist = []
+futures = []
 helpers = []
 idna = []
+iniconfig = []
 iso8601 = []
 itsdangerous = []
 jedi = []
 jinja2 = []
+jmespath = []
 kombu = []
 markupsafe = []
 multidict = []
@@ -912,9 +1077,12 @@ pluggy = []
 prompt-toolkit = []
 protobuf = []
 pycparser = []
+pycryptodome = []
 pycryptodomex = []
 pyflakes = []
 pyseto = []
+pytest = []
+python-dateutil = []
 python-lsp-jsonrpc = []
 python-slugify = []
 pytoolconfig = []
@@ -923,11 +1091,15 @@ replit = []
 replit-python-lsp-server = []
 requests = []
 rope = []
+s3transfer = []
+secret = []
 six = []
 stringcase = []
+tabulate = []
 text-unidecode = []
 toml = []
 tomli = []
+trollius = []
 typing-extensions = []
 ujson = []
 urllib3 = []
