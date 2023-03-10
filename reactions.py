@@ -6,6 +6,7 @@ import datetime
 from replit import db
 
 societe = ['sociét', 'societ']
+saucisse = ['saucisse']
 sus = ['sus']
 cum = ['cum']
 fromage = ['fromage']
@@ -30,10 +31,11 @@ def nerdify(string):
   return res
 
 def find_any_word(word_list, source_list):
-  if any(word in word_list for word in source_list):
-    return True
-  else:
-    return False
+  for word in source_list:
+    for target in word_list:
+      if word == target:
+        return True
+  return False
 
 def find_any_substring(word_list, message):
   for word in word_list:
@@ -59,7 +61,7 @@ def handle_response(user_message, bot, message) -> str:
         return ('Joyeux anniversaire ' + format(message.author.mention))
         db[check_key] = 1
 
-  if find_any_word("saucisse", p_list) or find_any_substring(societe, p_message): #saucisse
+  if find_any_word(saucisse, p_list) or find_any_substring(societe, p_message): #saucisse
     emoji = discord.utils.get(bot.emojis, name='saucisse')
     return 'saucisse ' + str(emoji) + ' !'
 
@@ -119,7 +121,7 @@ def handle_response(user_message, bot, message) -> str:
     if count_drapeau >= 2:
       swords = '\U00002694️'
       pirate = '\U0001F3F4'+'\U0000200D'+'\U00002620'+'\U0000FE0F'
-      res_list = [swords, pirate]
+      res_list = [pirate, swords]
       return res_list
 
   if find_any_substring(conversano, p_message):
